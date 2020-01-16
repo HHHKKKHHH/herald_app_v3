@@ -27,9 +27,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => WelcomeModel(),
-      child: WelcomeView()
-    );
+        create: (context) => WelcomeModel(), child: WelcomeView());
   }
 }
 
@@ -37,9 +35,9 @@ class WelcomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(middle: Text("欢迎"),),
-      child:Center(
-        child:Text('欢迎页'))
-    );
+        navigationBar: CupertinoNavigationBar(
+          middle: Text("欢迎"),
+        ),
+        child: Center(child: Text('欢迎页')));
   }
 }

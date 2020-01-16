@@ -8,6 +8,7 @@ import './pages/welcome.dart';
 import './pages/login.dart';
 import './common/store.dart';
 import './common/theme.dart';
+import './common/routes.dart';
 
 Future<void> init() async {
   print("应用初始化开始");
@@ -17,6 +18,7 @@ Future<void> init() async {
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  print(heraldRoutes['/'](null));
   init().then((e) {
     runApp(App());
   });
@@ -56,18 +58,16 @@ class App extends StatelessWidget {
           ChangeNotifierProvider(create: (context) => AppModel(context))
         ],
         child: Consumer<AppModel>(builder: (context, appModel, child) {
-          if(appModel.isLoggedIn) {
+          if (appModel.isLoggedIn) {
             return CupertinoApp(
-              title:'小猴偷米',
-              theme:heraldTheme,
-              home: WelcomePage(),
+              title: '小猴偷米',
+              theme: heraldTheme,
+              initialRoute: "/",
+              routes: heraldRoutes,
             );
           } else {
             return CupertinoApp(
-              title:'小猴偷米',
-              theme:heraldTheme,
-              home: LoginPage(),
-            );
+                title: '小猴偷米', theme: heraldTheme, home: LoginPage());
           }
         }));
   }
