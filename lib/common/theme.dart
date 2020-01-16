@@ -9,4 +9,5 @@ CupertinoThemeData heraldTheme = new CupertinoThemeData(
         primaryContrastingColor: Color(0xFF000000),
         brightness: Brightness.dark,
         scaffoldBackgroundColor: Color(0xFFFFFFFF),
+        textTheme: CupertinoTextThemeData()
       );

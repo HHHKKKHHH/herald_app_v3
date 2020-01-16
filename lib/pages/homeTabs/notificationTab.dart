@@ -7,7 +7,7 @@ Widget notificationTabView(BuildContext context){
     ),
     child:Center(
       child:CupertinoButton(
-        child: Text('打开新的路由'),
+        child: Text('没用的按钮'),
         onPressed: () {
         }
       )

@@ -1,9 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import '../pages/welcome.dart';
+import '../pages/example.dart';
 
 Map<String, WidgetBuilder> heraldRoutes =  <String, WidgetBuilder>{
-  "/":(context){
-    print('in router');
-    return WelcomePage();
-    }
+  "/example":(context) => ExamplePage()
 };

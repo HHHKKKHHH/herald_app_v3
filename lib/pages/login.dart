@@ -24,7 +24,7 @@ class LoginModel extends ChangeNotifier {
   }
 
   void handleLogin(BuildContext context){
-    Provider.of<AppModel>(context, listen:false).login("fake_token");
+    Provider.of<AppModel>(context, listen:false).login(context, "fake_token");
   }
 }
 
