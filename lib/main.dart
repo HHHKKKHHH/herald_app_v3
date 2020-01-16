@@ -1,75 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
-import './utils/miscellaneous.dart';
+import 'package:provider/provider.dart';
+import './common/miscellaneous.dart';
+import './pages/homeTabScaffold.dart';
+import './pages/welcome.dart';
+import './pages/login.dart';
+import './common/store.dart';
+import './common/theme.dart';
 
-void main() {
-  runApp(MyApp());
-  SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(statusBarBrightness: Brightness.dark));
+Future<void> init() async {
+  print("应用初始化开始");
+  await Store.init();
+  return;
 }
 
-class MyApp extends StatelessWidget {
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  init().then((e) {
+    runApp(App());
+  });
+}
+
+class AppModel extends ChangeNotifier {
+  BuildContext _context;
+  String _apiToken;
+
+  AppModel(this._context) : super() {
+    _apiToken = Store.prefs.getString(Store.keyMap["api_token"]);
+  }
+
+  get isLoggedIn {
+    return !(_apiToken == null || _apiToken.isEmpty);
+  }
+
+  void login(String newApiToken) async {
+    this._apiToken = newApiToken;
+    await Store.prefs.setString(Store.keyMap["api_token"], _apiToken);
+    notifyListeners();
+  }
+
+  void logout() async {
+    this._apiToken = null;
+    await Store.prefs.clear();
+    notifyListeners();
+  }
+}
+
+class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return CupertinoApp(
-      title: '小猴偷米',
-      home: CupertinoTheme(
-        data: CupertinoThemeData(
-            barBackgroundColor: ColorWithFakeLuminance(Color(0xFF13ACD9), withLightLuminance:true),
-            primaryColor: Color(0xFF13ACD9),
-            primaryContrastingColor: Color(0xFFFFFFFF),
-            brightness: Brightness.dark),
-        child: MyHomePage(title: 'Flutter Demo Home Page'),
-      ),
-    );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: CupertinoNavigationBar(middle: Text('小猴偷米')),
-      backgroundColor: Color(0xFFFFFFFF),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.display1,
-            ),
-            CupertinoButton(
-              child: Text(
-                '点击+1'
-              ),
-              onPressed: _incrementCounter,
-            ),
-          ],
-        ),
-      ),
-    );
+    return MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => AppModel(context))
+        ],
+        child: Consumer<AppModel>(builder: (context, appModel, child) {
+          if(appModel.isLoggedIn) {
+            return CupertinoApp(
+              title:'小猴偷米',
+              theme:heraldTheme,
+              home: WelcomePage(),
+            );
+          } else {
+            return CupertinoApp(
+              title:'小猴偷米',
+              theme:heraldTheme,
+              home: LoginPage(),
+            );
+          }
+        }));
   }
 }
