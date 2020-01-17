@@ -7,7 +7,7 @@ class Store {
     print('初始化完成');
   }
   static Map<String, String> keyMap = {
-    "API_TOKEN":"HERLAD_APP_API_TOKEN"
+    "API_TOKEN":"HERALD_APP_API_TOKEN"
   };
   
 }

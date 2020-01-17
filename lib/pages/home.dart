@@ -7,7 +7,7 @@ const HOME_TAB_ICON_ACTIVE = 'resources/images/tabIcons/home-active.png';
 const NOTIFICATION_TAB_ICON = 'resources/images/tabIcons/notification.png';
 const NOTIFICATION_TAB_ICON_ACTIVE = 'resources/images/tabIcons/notification-active.png';
 
-Widget homePage(BuildContext context) {
+Widget homePage() {
   return CupertinoTabScaffold(
     tabBar: CupertinoTabBar(
       activeColor:null,

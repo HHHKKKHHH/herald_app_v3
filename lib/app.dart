@@ -20,7 +20,6 @@ class AppModel extends ChangeNotifier {
   void login(BuildContext context, String newApiToken) async {
     this._apiToken = newApiToken;
     await Store.prefs.setString(Store.keyMap["API_TOKEN"], _apiToken);
-    //Navigator.popUntil(context, ModalRoute.withName("/"));
     notifyListeners();
   }
 
@@ -45,7 +44,7 @@ class App extends StatelessWidget {
           title: "小猴偷米",
           theme: heraldTheme,
           home: Consumer<AppModel>(builder: (context, appModel, child) {
-            return appModel.isLoggedIn ? homePage(context) : LoginPage();
+            return appModel.isLoggedIn ? homePage() : LoginPage();
           }),
           routes: heraldRoutes,
         )

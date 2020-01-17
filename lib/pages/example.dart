@@ -17,17 +17,19 @@ class ExampleModel extends ChangeNotifier {
 
   set hintText(String value) {
     this._hintText = value;
+    notifyListeners();
   }
 
   get hintText {
     return this._hintText;
   }
 
-  void logout(context){
-    Provider.of<AppModel>(context, listen:false).logout(context);
+  void logout(context) {
+    //hintText = 'zzj-socute';
+    Provider.of<AppModel>(context, listen: false).logout(context);
   }
 
-  void pushNewRoute(context){
+  void pushNewRoute(context) {
     Navigator.of(context).pushNamed('/example');
   }
 }
@@ -49,20 +51,23 @@ class ExampleView extends StatelessWidget {
           //actionsForegroundColor: Color(0xFFFFFFFF),
         ),
         child: Center(
-          child: Column(children: <Widget>[
-CupertinoButton(
-          child:Text("打开新路由", style:TextStyle(color:Color(0xFF13ACD9))),
-          onPressed: () {
-            Provider.of<ExampleModel>(context, listen:false).pushNewRoute(context);
-          }
-        ),
-        CupertinoButton(
-          child:Text("点击注销", style:TextStyle(color:Color(0xFF13ACD9))),
-          onPressed: () {
-            Provider.of<ExampleModel>(context, listen:false).logout(context);
-          }
-        )
-          ],)
-          ));
+            child: Column(
+          children: <Widget>[
+            CupertinoButton(
+                child:
+                    Text("打开新路由", style: TextStyle(color: Color(0xFF13ACD9))),
+                onPressed: () {
+                  Provider.of<ExampleModel>(context, listen: false)
+                      .pushNewRoute(context);
+                }),
+            Text( Provider.of<ExampleModel>(context).hintText, style: TextStyle(color: Color(0xFF000000))),
+            CupertinoButton(
+                child: Text("点击注销", style: TextStyle(color: Color(0xFF13ACD9))),
+                onPressed: () {
+                  Provider.of<ExampleModel>(context, listen: false)
+                      .logout(context);
+                })
+          ],
+        )));
   }
 }
