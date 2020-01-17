@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import '../main.dart';
+import '../app.dart';
 
 class LoginModel extends ChangeNotifier {
   bool _showLoading = true;

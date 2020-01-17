@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import '../main.dart';
+import '../app.dart';
 
 class ExampleModel extends ChangeNotifier {
   bool _showLoading = true;
@@ -46,6 +46,7 @@ class ExampleView extends StatelessWidget {
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(
           middle: Text("示例路由"),
+          //actionsForegroundColor: Color(0xFFFFFFFF),
         ),
         child: Center(
           child: Column(children: <Widget>[
