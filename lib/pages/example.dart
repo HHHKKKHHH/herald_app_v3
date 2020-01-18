@@ -1,10 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import '../app.dart';
+import '../models/base.dart';
 
-class ExampleModel extends ChangeNotifier {
+class ExampleModel extends BaseModel {
   bool _showLoading = true;
   String _hintText = '请稍候……';
+
+  ExampleModel(BuildContext context):super(context);
 
   set showLoading(bool value) {
     this._showLoading = value;
@@ -24,9 +27,10 @@ class ExampleModel extends ChangeNotifier {
     return this._hintText;
   }
 
-  void logout(context) {
+  Future<void> logout(context) async{
     //hintText = 'zzj-socute';
-    Provider.of<AppModel>(context, listen: false).logout(context);
+    await Future.delayed(Duration(seconds:3));
+    appModel.logout(context);
   }
 
   void pushNewRoute(context) {
@@ -38,7 +42,7 @@ class ExamplePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-        create: (context) => ExampleModel(), child: ExampleView());
+        create: (context) => ExampleModel(context), child: ExampleView());
   }
 }
 

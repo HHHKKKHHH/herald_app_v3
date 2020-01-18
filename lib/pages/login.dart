@@ -1,17 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:herald_app/models/base.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
-import '../app.dart';
 import 'package:dio/dio.dart';
 
-class LoginModel extends ChangeNotifier {
+class LoginModel extends BaseModel {
   bool _showLoading = false;
   String _hintText = '';
   FlutterWebviewPlugin _webview;
-  BuildContext _context;
 
-  LoginModel(this._context) : super() {
+  LoginModel(BuildContext context) : super(context) {
     print("创建 LoginModel");
   }
 
@@ -33,7 +32,7 @@ class LoginModel extends ChangeNotifier {
     return this._hintText;
   }
 
-  void handleLogin(BuildContext context) async {
+  void handleLogin() async {
     showLoading = true;
     hintText = "";
     if (_webview != null) {
@@ -91,8 +90,7 @@ class LoginModel extends ChangeNotifier {
     print(response.data.toString());
     // Provider.of<AppModel>(_context, listen: false).login(_context, url);
     _webview.dispose();
-    Future.microtask(() =>
-        Provider.of<AppModel>(_context, listen: false).login(_context, url));
+    appModel.login(context, url);
   }
 }
 
@@ -143,7 +141,7 @@ class LoginView extends StatelessWidget {
                               style: TextStyle(color: Color(0xFFFFFFFF))),
                           onPressed: () {
                             Provider.of<LoginModel>(context, listen: false)
-                                .handleLogin(context);
+                                .handleLogin();
                           },
                           color: Color(0xFF13ACD9),
                         ),
