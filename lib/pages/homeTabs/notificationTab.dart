@@ -1,16 +1,35 @@
 import 'package:flutter/cupertino.dart';
+import '../../models/base.dart';
+import '../../main.dart';
+import 'package:provider/provider.dart';
+class NotificationTabModel extends BaseModel {
 
-Widget notificationTabView(BuildContext context){
+  NotificationTabModel(BuildContext context):super(context);
+}
+
+class NotificationTabPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return ChangeNotifierProvider(
+        create: (context) => NotificationTabModel(context), child: NotificationTabView());
+  }
+}
+
+class NotificationTabView extends StatelessWidget{
+  @override
+Widget build(BuildContext context){
   return CupertinoPageScaffold(
     navigationBar: CupertinoNavigationBar(
-      middle: Text('通知公告')
+      middle: Text('小猴偷米')
     ),
     child:Center(
-      child:CupertinoButton(
-        child: Text('没用的按钮'),
+      child: CupertinoButton(
+        child:Text('打开新路由'),
         onPressed: () {
+          Navigator.of(context, rootNavigator:true).pushNamed("/example");
         }
       )
     )
   );
+}
 }

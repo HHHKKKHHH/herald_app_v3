@@ -37,6 +37,10 @@ class LoginModel extends BaseModel {
     return this._hintText;
   }
 
+  void testLogin(){
+    String url="www.daidu.com";
+    appModel.login(context, url);
+  }
   void handleLogin() async {
     showLoading = true;
     hintText = "";
@@ -146,7 +150,7 @@ class LoginView extends StatelessWidget {
                               style: TextStyle(color: Color(0xFFFFFFFF))),
                           onPressed: () {
                             Provider.of<LoginModel>(context, listen: false)
-                                .handleLogin();
+                                .testLogin();
                           },
                           color: Color(0xFF13ACD9),
                         ),

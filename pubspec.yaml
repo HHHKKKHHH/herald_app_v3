@@ -52,7 +52,18 @@ flutter:
    - resources/images/tabIcons/home-active.png
    - resources/images/tabIcons/notification.png
    - resources/images/tabIcons/notification-active.png
-
+   - resources/images/tabIcons/activity.png
+   - resources/images/tabIcons/activity-active.png
+   - resources/images/tabIcons/personal.png
+   - resources/images/tabIcons/personal-active.png
+   - resources/images/logout.png
+   - resources/images/download.png
+   - resources/images/expand.png
+   - resources/images/personalPage/bus.png
+   - resources/images/personalPage/calendar.png 
+   - resources/images/personalPage/guide.png
+   - resources/images/personalPage/predict.png
+   - resources/images/right.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

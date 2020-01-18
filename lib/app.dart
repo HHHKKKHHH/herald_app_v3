@@ -20,6 +20,10 @@ class AppModel extends ChangeNotifier {
   get isLoggedIn {
     return !(_apiToken == null || _apiToken.isEmpty);
   }
+  
+  Future<bool> checkUpdate(BuildContext context) async{//true为需要更新
+    return false;
+  }
 
   void login(BuildContext context, String newApiToken) async {
     this._apiToken = newApiToken;
