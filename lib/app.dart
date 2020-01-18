@@ -13,6 +13,10 @@ class AppModel extends ChangeNotifier {
     _apiToken = Store.prefs.getString(Store.keyMap["API_TOKEN"]);
   }
 
+  get apiToken {
+    return _apiToken;
+  }
+
   get isLoggedIn {
     return !(_apiToken == null || _apiToken.isEmpty);
   }
