@@ -13,7 +13,12 @@ class LoginModel extends BaseModel {
   LoginModel(BuildContext context) : super(context) {
     print("创建 LoginModel");
   }
-
+  void showpolicy(context) {
+    Navigator.of(context).pushNamed('/policy');
+  }
+  void showAgreement(context) {
+    Navigator.of(context).pushNamed('/agreement');
+  }
   set showLoading(bool value) {
     this._showLoading = value;
     notifyListeners();
@@ -157,15 +162,21 @@ class LoginView extends StatelessWidget {
                                       color: Color(0xFF333333),
                                       fontSize: 13.0)),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                     Provider.of<LoginModel>(context, listen: false)
+                                      .showAgreement(context);
+                                },
                                 child: Text(
                                   '用户协议、',
                                   style: TextStyle(
-                                      color: Color(0xFF13ACD9), fontSize: 13.0),
+                                      color: Color(0xFF13ACD9), fontSize: 13.0),   
                                 ),
                               ),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Provider.of<LoginModel>(context, listen: false)
+                                      .showpolicy(context);
+                                },
                                 child: Text(
                                   '隐私政策',
                                   style: TextStyle(
