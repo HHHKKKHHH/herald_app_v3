@@ -14,6 +14,7 @@ class BaseModel extends ChangeNotifier {
     // 获取 AppModel
     appModel = Provider.of<AppModel>(context, listen: false);
     // 初始化 Dio
+    dio = new Dio();
     dio.options.baseUrl = Config.baseUrl;
     dio.options.headers['x-api-token'] = appModel.apiToken;
     dio.options.headers['content-type'] = "application/json";

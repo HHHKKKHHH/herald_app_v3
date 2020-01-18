@@ -38,9 +38,9 @@ class UserAgreementView extends StatelessWidget {
         ),
         child: Padding(
                 padding: const EdgeInsets.all(32.0),
-                child: CustomScrollView(
+                child: ListView(
                   primary: true,
-                  slivers: <Widget>[
+                  children: <Widget>[
                     Text(
                       Provider.of<UserAgreementModel>(context, listen: false)
                           ._agreementTitle,
