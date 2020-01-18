@@ -8,7 +8,7 @@ import '../app.dart';
 class BaseModel extends ChangeNotifier {
   BuildContext context;
   AppModel appModel;
-  Dio dio;
+  Dio dio = Dio();
 
   BaseModel(this.context):super(){
     // 获取 AppModel
