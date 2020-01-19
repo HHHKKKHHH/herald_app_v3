@@ -4,6 +4,7 @@ import '../../main.dart';
 import 'package:provider/provider.dart';
 import '../../models/base.dart';
 import '../../models/toast.dart';
+import '../../common/theme.dart';
 import '../../app.dart';
 
 const LOGOUT_ICON = "resources/images/logout.png";
@@ -31,18 +32,12 @@ class PersonalTabModel extends BaseModel {
   set studentType(value) {
     this._studentType = value;
   }
-
+  // TODO: 故障发送跳转
   Future<void> feedBack(BuildContext context) async {
-    bool isNeedUpdate = await Provider.of<AppModel>(context, listen: false)
-        .checkUpdate(context);
-    if (!isNeedUpdate) {
       Toast.toast(context,
-          msg: '小猴偷米: 已经是最新版本了~', position: ToastPostion.bottom);
-    } else {
-      //唤起更新机制
-    }
+          msg: '小猴偷米: 您的问题已经提交~', position: ToastPostion.bottom);
   }
-
+  // TODO: 各页面跳转函数
   void gotoNewStudentGuide(BuildContext context) {
     //跳转到新生指引
     Navigator.of(context, rootNavigator: true).pushNamed("/example");
@@ -81,6 +76,7 @@ class PersonalTabPage extends StatelessWidget {
 class PersonalTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    return Consumer<PersonalTabModel>(builder: (context, personalTabModel, child){
     return CupertinoPageScaffold(
         navigationBar: CupertinoNavigationBar(middle: Text('小猴偷米')),
         child: Center(
@@ -91,19 +87,9 @@ class PersonalTabView extends StatelessWidget {
                     Container(
                         margin: EdgeInsets.all(15),
                         alignment: Alignment(0, 0),
-                        height: 120,
+                        height: 110,
                         width: MediaQuery.of(context).size.width - 30,
-                        decoration: BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color(0x16000000),
-                                  offset: Offset(0,2),
-                                  blurRadius: 1,
-                                  spreadRadius: 0.1)
-                            ]
-                            ),
+                        decoration: heraldContainerTheme,
                         child: Container(
                             padding: EdgeInsets.only(
                                 left: 20, right: 20, top: 15, bottom: 0),
@@ -113,9 +99,7 @@ class PersonalTabView extends StatelessWidget {
                                     padding:
                                         EdgeInsets.only(left: 10, bottom: 10),
                                     child: Text(
-                                        Provider.of<PersonalTabModel>(context,
-                                                listen: true)
-                                            ._name,
+                                        personalTabModel.name,
                                         style: TextStyle(
                                           fontSize: 18,
                                           color: Color(0xFF000000),
@@ -125,10 +109,7 @@ class PersonalTabView extends StatelessWidget {
                                         top: 10, left: 15, bottom: 10),
                                     child: Text(
                                         "东南大学" +
-                                            Provider.of<PersonalTabModel>(
-                                                    context,
-                                                    listen: true)
-                                                ._studentType,
+                                            personalTabModel.studentType,
                                         style: TextStyle(
                                           fontSize: 12,
                                           color: Color(0x99000000),
@@ -143,31 +124,34 @@ class PersonalTabView extends StatelessWidget {
                                     width: (MediaQuery.of(context).size.width -
                                             70) /
                                         2,
-                                    child: CupertinoButton(
-                                        onPressed: () {
-                                          Provider.of<PersonalTabModel>(context,
-                                                  listen: false)
-                                              .feedBack(context);
-                                        },
-                                        child: Column(children: <Widget>[
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text("故障反馈",
-                                                    style: TextStyle(
-                                                        fontSize: 13,
-                                                        color:
-                                                            Color(0xEE000000))),
-                                                Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: 3),
-                                                    child: Image(
-                                                        image: AssetImage(
-                                                            DOWNLOAD_ICON),
-                                                        height: 20))
-                                              ])
-                                        ]))),
+                                    child: Container(
+                                      padding: EdgeInsets.only(top: 10),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Provider.of<PersonalTabModel>(context,
+                                                    listen: false)
+                                                .feedBack(context);
+                                          },
+                                          child: Column(children: <Widget>[
+                                            Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text("故障反馈",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color:
+                                                              Color(0xEE000000))),
+                                                  Container(
+                                                      padding: EdgeInsets.only(
+                                                          left: 3),
+                                                      child: Image(
+                                                          image: AssetImage(
+                                                              DOWNLOAD_ICON),
+                                                          height: 20))
+                                                ])
+                                          ])),
+                                    )),
                                 Container(
                                     height: 20,
                                     width: 1,
@@ -177,179 +161,180 @@ class PersonalTabView extends StatelessWidget {
                                                 70) /
                                             2 -
                                         1,
-                                    child: CupertinoButton(
-                                        onPressed: () {
-                                          Provider.of<AppModel>(context,
-                                                  listen: false)
-                                              .logout(context);
-                                        },
-                                        child: Column(children: <Widget>[
-                                          Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Text("退出登录",
-                                                    style: TextStyle(
-                                                        fontSize: 13,
-                                                        color:
-                                                            Color(0xEE000000))),
-                                                Container(
-                                                    padding: EdgeInsets.only(
-                                                        left: 3),
-                                                    child: Image(
-                                                        image: AssetImage(
-                                                            LOGOUT_ICON),
-                                                        height: 20))
-                                              ])
-                                        ]))),
+                                    child: Container(
+                                      padding: EdgeInsets.only(top: 10),
+                                      child: GestureDetector(
+                                          onTap: () {
+                                            Provider.of<AppModel>(context,
+                                                    listen: false)
+                                                .logout(context);
+                                          },
+                                          child: Column(children: <Widget>[
+                                            Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  Text("退出登录",
+                                                      style: TextStyle(
+                                                          fontSize: 13,
+                                                          color:
+                                                              Color(0xEE000000))),
+                                                  Container(
+                                                      padding: EdgeInsets.only(
+                                                          left: 3),
+                                                      child: Image(
+                                                          image: AssetImage(
+                                                              LOGOUT_ICON),
+                                                          height: 20))
+                                                ])
+                                          ])),
+                                    )),
                               ])
                             ]))),
                     Container(
                         margin: EdgeInsets.only(left: 15, right: 15),
                         alignment: Alignment(0, 0),
-                        height: 270,
+                        height: 220,
                         width: MediaQuery.of(context).size.width - 30,
-                        decoration: BoxDecoration(
-                            color: Color(0xFFFFFFFF),
-                            borderRadius: BorderRadius.all(Radius.circular(8)),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: Color(0x16000000),
-                                  offset: Offset(0,2),
-                                  blurRadius: 1,
-                                  spreadRadius: 0.1)
-                            ]
-                            ),
+                        decoration: heraldContainerTheme,
                         child: Container(
                             padding: EdgeInsets.only(
                                 left: 20, right: 20, top: 5, bottom: 0),
                             child: Column(children: <Widget>[
-                              CupertinoButton(
-                                  minSize: 10,
-                                  onPressed: () {
-                                    Provider.of<PersonalTabModel>(context,
-                                            listen: false)
-                                        .gotoNewStudentGuide(context);
-                                  },
-                                  child: Row(children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Image(
-                                          image: AssetImage(
-                                              "resources/images/personalPage/guide.png"),
-                                          height: 25),
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Text("新生指引",
-                                            style: TextStyle(
-                                                color: Color(0xFF000000),
-                                                fontSize: 15))),
-                                    Spacer(),
-                                    Container(
+                              Container(
+                                height: 45,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Provider.of<PersonalTabModel>(context,
+                                              listen: false)
+                                          .gotoNewStudentGuide(context);
+                                    },
+                                    child: Row(children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(right: 10),
                                         child: Image(
                                             image: AssetImage(
-                                                "resources/images/right.png"),
-                                            height: 18))
-                                  ])),
+                                                "resources/images/personalPage/guide.png"),
+                                            height: 20),
+                                      ),
+                                      Container(
+                                          padding: EdgeInsets.only(left: 12),
+                                          child: Text("新生指引",
+                                              style: TextStyle(
+                                                  color: Color(0xFF000000),
+                                                  fontSize: 15))),
+                                      Spacer(),
+                                      Container(
+                                          child: Image(
+                                              image: AssetImage(
+                                                  "resources/images/right.png"),
+                                              height: 18))
+                                    ])),
+                              ),
                               Divider(
                                 height: 10,
                                 color: Color(0x55000000),
                               ),
-                              CupertinoButton(
-                                  minSize: 10,
-                                  onPressed: () {
-                                    Provider.of<PersonalTabModel>(context,
-                                            listen: false)
-                                        .gotoSchedulePredict(context);
-                                  },
-                                  child: Row(children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Image(
-                                          image: AssetImage(
-                                              "resources/images/personalPage/predict.png"),
-                                          height: 25),
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Text("课表预测",
-                                            style: TextStyle(
-                                                color: Color(0xFF000000),
-                                                fontSize: 15))),
-                                    Spacer(),
-                                    Container(
+                              Container(
+                                height:40,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Provider.of<PersonalTabModel>(context,
+                                              listen: false)
+                                          .gotoSchedulePredict(context);
+                                    },
+                                    child: Row(children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(right: 10),
                                         child: Image(
                                             image: AssetImage(
-                                                "resources/images/right.png"),
-                                            height: 18))
-                                  ])),
+                                                "resources/images/personalPage/predict.png"),
+                                            height: 20),
+                                      ),
+                                      Container(
+                                          padding: EdgeInsets.only(left: 12),
+                                          child: Text("课表预测",
+                                              style: TextStyle(
+                                                  color: Color(0xFF000000),
+                                                  fontSize: 15))),
+                                      Spacer(),
+                                      Container(
+                                          child: Image(
+                                              image: AssetImage(
+                                                  "resources/images/right.png"),
+                                              height: 18))
+                                    ])),
+                              ),
                               Divider(
                                 height: 10,
                                 color: Color(0x55000000),
                               ),
-                              CupertinoButton(
-                                  minSize: 10,
-                                  onPressed: () {
-                                    Provider.of<PersonalTabModel>(context,
-                                            listen: false)
-                                        .gotoCalendar(context);
-                                  },
-                                  child: Row(children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Image(
-                                          image: AssetImage(
-                                              "resources/images/personalPage/calendar.png"),
-                                          height: 27),
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Text("查看校历",
-                                            style: TextStyle(
-                                                color: Color(0xFF000000),
-                                                fontSize: 15))),
-                                    Spacer(),
-                                    Container(
+                              Container(
+                                height:45,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Provider.of<PersonalTabModel>(context,
+                                              listen: false)
+                                          .gotoCalendar(context);
+                                    },
+                                    child: Row(children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(right: 10),
                                         child: Image(
                                             image: AssetImage(
-                                                "resources/images/right.png"),
-                                            height: 18))
-                                  ])),
+                                                "resources/images/personalPage/calendar.png"),
+                                            height: 25),
+                                      ),
+                                      Container(
+                                          padding: EdgeInsets.only(left:9),
+                                          child: Text("查看校历",
+                                              style: TextStyle(
+                                                  color: Color(0xFF000000),
+                                                  fontSize: 15))),
+                                      Spacer(),
+                                      Container(
+                                          child: Image(
+                                              image: AssetImage(
+                                                  "resources/images/right.png"),
+                                              height: 18))
+                                    ])),
+                              ),
                               Divider(
                                 height: 10,
                                 color: Color(0x55000000),
                               ),
-                              CupertinoButton(
-                                  minSize: 10,
-                                  onPressed: () {
-                                    Provider.of<PersonalTabModel>(context,
-                                            listen: false)
-                                        .gotoSchoolBusAssistant(context);
-                                  },
-                                  child: Row(children: <Widget>[
-                                    Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      child: Image(
-                                          image: AssetImage(
-                                              "resources/images/personalPage/bus.png"),
-                                          height: 25),
-                                    ),
-                                    Container(
-                                        padding: EdgeInsets.only(left: 10),
-                                        child: Text("校车助手",
-                                            style: TextStyle(
-                                                color: Color(0xFF000000),
-                                                fontSize: 15))),
-                                    Spacer(),
-                                    Container(
+                              Container(
+                                height:45,
+                                child: GestureDetector(
+                                    onTap: () {
+                                      Provider.of<PersonalTabModel>(context,
+                                              listen: false)
+                                          .gotoSchoolBusAssistant(context);
+                                    },
+                                    child: Row(children: <Widget>[
+                                      Container(
+                                        padding: EdgeInsets.only(left:3,right:10),
                                         child: Image(
                                             image: AssetImage(
-                                                "resources/images/right.png"),
-                                            height: 18))
-                                  ])),
+                                                "resources/images/personalPage/bus.png"),
+                                            height: 20),
+                                      ),
+                                      Container(
+                                          padding: EdgeInsets.only(left: 12),
+                                          child: Text("校车助手",
+                                              style: TextStyle(
+                                                  color: Color(0xFF000000),
+                                                  fontSize: 15))),
+                                      Spacer(),
+                                      Container(
+                                          child: Image(
+                                              image: AssetImage(
+                                                  "resources/images/right.png"),
+                                              height: 18))
+                                    ])),
+                              ),
                             ])))
                   ],
-                ))));
+                ))));});
   }
 }
