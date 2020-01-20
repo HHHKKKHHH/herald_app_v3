@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './pages/home.dart';
 import './pages/login.dart';
@@ -8,6 +9,10 @@ import './common/routes.dart';
 
 class AppModel extends ChangeNotifier {
   String _apiToken;
+  
+
+  
+
 
   AppModel() : super() {
     _apiToken = Store.prefs.getString(Store.keyMap["API_TOKEN"]);
@@ -48,9 +53,9 @@ class App extends StatelessWidget {
         providers: [
           ChangeNotifierProvider(create: (context) => AppModel())
         ],
-        child: CupertinoApp(
+        child: new MaterialApp(
           title: "小猴偷米",
-          theme: heraldTheme,
+          //theme: heraldTheme,
           home: Consumer<AppModel>(builder: (context, appModel, child) {
             return appModel.isLoggedIn ? homePage() : LoginPage();
           }),

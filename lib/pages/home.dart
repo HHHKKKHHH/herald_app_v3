@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
-import './homeTabs/homeTab.dart';
-import './homeTabs/notificationTab.dart';
-import './homeTabs/personalTab.dart';
+import './Tabs/homeTab.dart';
+import './Tabs/notificationTab.dart';
+import './Tabs/personalTab.dart';
 
 const HOME_TAB_ICON = 'resources/images/tabIcons/home.png';
 const HOME_TAB_ICON_ACTIVE = 'resources/images/tabIcons/home-active.png';

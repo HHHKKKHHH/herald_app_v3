@@ -69,6 +69,7 @@ flutter:
    - resources/images/homePage/grade.png
    - resources/images/homePage/srtp.png
    - resources/images/homePage/lecture.png
+   - resources/images/App2.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
