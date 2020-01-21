@@ -60,7 +60,9 @@ class PersonalTabModel extends BaseModel {
     //跳转到洗衣房查询
     Navigator.of(context, rootNavigator: true).pushNamed("/example");
   }
-
+  Future<void> refresh(BuildContext context){
+      print("personal");
+  }
   void gotoSchoolBusAssistant(BuildContext context) {
     //跳转到校车助手
     Navigator.of(context, rootNavigator: true).pushNamed("/example");
@@ -82,7 +84,7 @@ class PersonalTabView extends StatelessWidget {
     return Consumer<PersonalTabModel>(
         builder: (context, personalTabModel, child) {
       return Scaffold(
-          appBar: heraldBar,
+          appBar: heraldBar(context,personalTabModel.refresh),
           body: Center(
               child: Container(
                   decoration: BoxDecoration(color: heraldBackGround),

@@ -114,91 +114,94 @@ class LoginPage extends StatelessWidget {
 class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
+    return Scaffold(
         // navigationBar: CupertinoNavigationBar(
         //   backgroundColor: Color(0xffffffff),
         //   border: null,
         // ),
-        child: SafeArea(
-            child: Column(
+        body: SafeArea(
+            child: Container(
+              color:Color(0xFFFFFFFF),
+              child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Expanded(
-            flex: 1,
-            child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                    padding: EdgeInsets.only(bottom: 40),
-                    child: Image(
-                        image: AssetImage('resources/images/ids.png'),
-                        width: 240.0)))),
+              flex: 1,
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                      padding: EdgeInsets.only(bottom: 40),
+                      child: Image(
+                          image: AssetImage('resources/images/ids.png'),
+                          width: 240.0)))),
         Expanded(
-            flex: 1,
-            child: Consumer<LoginModel>(builder: (context, loginModel, child) {
-              return Column(
-                children: <Widget>[
-                  loginModel.hintText.isEmpty
-                      ? Container()
-                      : Text(loginModel.hintText,
-                          style: TextStyle(color: Color(0xFFFF8F8F))),
-                  loginModel.showLoading
-                      ? CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation(Color(0xFF13ACD9)),
-                        )
-                      : CupertinoButton(
-                          child: Text("统一身份认证登录",
-                              style: TextStyle(color: Color(0xFFFFFFFF))),
-                          onPressed: () {
-                            Provider.of<LoginModel>(context, listen: false)
-                                .testLogin();
-                          },
-                          color: Color(0xFF13ACD9),
-                        ),
-                  loginModel.showLoading
-                      ? Container()
-                      : Padding(
-                          padding: EdgeInsets.only(top: 10.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text('登录即表示您同意我们的',
-                                  style: TextStyle(
-                                      color: Color(0xFF333333),
-                                      fontSize: 13.0)),
-                              GestureDetector(
-                                onTap: () {
-                                     Provider.of<LoginModel>(context, listen: false)
-                                      .showAgreement(context);
-                                },
-                                child: Text(
-                                  '用户协议、',
-                                  style: TextStyle(
-                                      color: Color(0xFF13ACD9), fontSize: 13.0),   
+              flex: 1,
+              child: Consumer<LoginModel>(builder: (context, loginModel, child) {
+                return Column(
+                  children: <Widget>[
+                    loginModel.hintText.isEmpty
+                        ? Container()
+                        : Text(loginModel.hintText,
+                            style: TextStyle(color: Color(0xFFFF8F8F))),
+                    loginModel.showLoading
+                        ? CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation(Color(0xFF13ACD9)),
+                          )
+                        : CupertinoButton(
+                            child: Text("统一身份认证登录",
+                                style: TextStyle(color: Color(0xFFFFFFFF))),
+                            onPressed: () {
+                              Provider.of<LoginModel>(context, listen: false)
+                                  .testLogin();
+                            },
+                            color: Color(0xFF13ACD9),
+                          ),
+                    loginModel.showLoading
+                        ? Container()
+                        : Padding(
+                            padding: EdgeInsets.only(top: 10.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text('登录即表示您同意我们的',
+                                    style: TextStyle(
+                                        color: Color(0xFF333333),
+                                        fontSize: 13.0)),
+                                GestureDetector(
+                                  onTap: () {
+                                       Provider.of<LoginModel>(context, listen: false)
+                                        .showAgreement(context);
+                                  },
+                                  child: Text(
+                                    '用户协议、',
+                                    style: TextStyle(
+                                        color: Color(0xFF13ACD9), fontSize: 13.0),   
+                                  ),
                                 ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  Provider.of<LoginModel>(context, listen: false)
-                                      .showpolicy(context);
-                                },
-                                child: Text(
-                                  '隐私政策',
-                                  style: TextStyle(
-                                      color: Color(0xFF13ACD9), fontSize: 13.0),
+                                GestureDetector(
+                                  onTap: () {
+                                    Provider.of<LoginModel>(context, listen: false)
+                                        .showpolicy(context);
+                                  },
+                                  child: Text(
+                                    '隐私政策',
+                                    style: TextStyle(
+                                        color: Color(0xFF13ACD9), fontSize: 13.0),
+                                  ),
                                 ),
-                              ),
-                            ],
-                          )),
-                  Spacer(),
-                  Padding(
-                      padding: EdgeInsets.only(bottom: 0.0),
-                      child: Text('东南大学信使计划工作室出品 版权所有 2019-2020',
-                          style: TextStyle(
-                              color: Color(0xFFA0A0A0), fontSize: 13.0)))
-                ],
-              );
-            })),
+                              ],
+                            )),
+                    Spacer(),
+                    Padding(
+                        padding: EdgeInsets.only(bottom: 0.0),
+                        child: Text('东南大学信使计划工作室出品 版权所有 2019-2020',
+                            style: TextStyle(
+                                color: Color(0xFFA0A0A0), fontSize: 13.0)))
+                  ],
+                );
+              })),
       ],
-    )));
+    ),
+            )));
   }
 }

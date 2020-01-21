@@ -120,7 +120,7 @@ class NotificationTabModel extends BaseModel {
     },
   ];
   List _data = [];
-  int _activity = 1; //1 = office , 2 = srtp
+  String _activity = "教务处"; //1 = office , 2 = srtp
 
   set officeData(List value) {
     this._officeData = value;
@@ -132,10 +132,10 @@ class NotificationTabModel extends BaseModel {
     notifyListeners();
   }
 
-  set activity(int value) {
-    if (value == 1) {
+  set activity(String value) {
+    if (value == "教务处") {
       this.data = this.officeData;
-    } else if (value == 2) {
+    } else if (value == "srtp") {
       this.data = this.srtpData;
     }
     this._activity = value;
@@ -165,6 +165,7 @@ class NotificationTabModel extends BaseModel {
 
   Future<void> refresh(BuildContext context) {
     //TODO: 数据处理
+    print("notification");
   }
 
   void goto(Map<String,String> item){
@@ -299,7 +300,7 @@ class NotificationTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<NotificationTabModel>(builder: (context, model, child) {
       return Scaffold(
-          appBar: heraldBar,
+          appBar: heraldBar(context,model.refresh),
           body: Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,
@@ -329,7 +330,7 @@ class NotificationTabView extends StatelessWidget {
                                                 color: heraldBlue, width: 1),
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            color: model.activity == 1
+                                            color: model.activity == "教务处"
                                                 ? heraldBlue
                                                 : Colors.white,
                                             boxShadow: [
@@ -341,13 +342,13 @@ class NotificationTabView extends StatelessWidget {
                                             ]),
                                         child: GestureDetector(
                                             onTap: () {
-                                              model.activity = 1;
+                                              model.activity = "教务处";
                                             },
                                             child: Container(
                                                 child: Center(
                                               child: Text("教务处",
                                                   style: TextStyle(
-                                                      color: model.activity == 1
+                                                      color: model.activity == "教务处"
                                                           ? Colors.white
                                                           : heraldBlue,
                                                       fontSize: 14,
@@ -364,7 +365,7 @@ class NotificationTabView extends StatelessWidget {
                                                 color: heraldBlue, width: 1),
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            color: model.activity == 2
+                                            color: model.activity == "srtp"
                                                 ? heraldBlue
                                                 : Colors.white,
                                             boxShadow: [
@@ -376,13 +377,13 @@ class NotificationTabView extends StatelessWidget {
                                             ]),
                                         child: GestureDetector(
                                             onTap: () {
-                                              model.activity = 2;
+                                              model.activity = "srtp";
                                             },
                                             child: Container(
                                                 child: Center(
                                               child: Text("SRTP",
                                                   style: TextStyle(
-                                                      color: model.activity == 2
+                                                      color: model.activity == "srtp"
                                                           ? Colors.white
                                                           : heraldBlue,
                                                       fontSize: 15,

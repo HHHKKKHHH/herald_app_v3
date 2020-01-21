@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../app.dart';
 import '../models/base.dart';
+import '../common/theme.dart';
 
 class ExampleModel extends BaseModel {
   bool _showLoading = true;
@@ -49,12 +51,9 @@ class ExamplePage extends StatelessWidget {
 class ExampleView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return CupertinoPageScaffold(
-        navigationBar: CupertinoNavigationBar(
-          middle: Text("示例路由"),
-          //actionsForegroundColor: Color(0xFFFFFFFF),
-        ),
-        child: Center(
+    return Scaffold(
+        appBar:customBar(context,"示例路由"),
+        body: Center(
             child: Column(
           children: <Widget>[
             CupertinoButton(
